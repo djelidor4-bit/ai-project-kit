@@ -1,0 +1,197 @@
+{
+  "name": "ai-project-kit",
+  "version": "2.0.0",
+  "released": "2026-10-23",
+  "previousVersion": "1.0.0 (AGENT-SYSTEM-PORTABLE-KIT.md, 2026-08-20)",
+  "description": "Reusable project working model for Claude Code and Codex: a main agent that orchestrates professional agents, process skills, documentation discipline with lock levels, an engineering operating model, and an autonomy switch.",
+  "node": ">=18",
+  "supportedTools": ["claude", "codex"],
+  "defaultTools": ["claude", "codex"],
+  "agentsMaxBytes": 24576,
+  "coreAgentsMaxBytes": 18000,
+  "codexProjectDocMaxBytes": 32768,
+  "deferredMarker": "⏳ למלא:",
+  "files": {
+    "startHere": "START-HERE.md",
+    "readme": "README.md",
+    "guide": "GUIDE-HE.md",
+    "changelog": "CHANGELOG.md",
+    "kitAgentsMd": "AGENTS.md",
+    "kitClaudeMd": "CLAUDE.md",
+    "install": "tools/install.mjs",
+    "check": "tools/check.mjs",
+    "buildBundle": "tools/build-bundle.mjs",
+    "bundle": "dist/ai-project-kit-{version}.zip"
+  },
+  "kitOnly": {
+    "note": "The kit folder's own maintenance constitution: read by an AI session opened in the kit folder. Never installed into a project; shipped in the zip with the rest of the kit.",
+    "files": ["AGENTS.md", "CLAUDE.md"],
+    "agentsMaxBytes": 2560
+  },
+  "targetLayout": {
+    "agentsMd": "AGENTS.md",
+    "claudeMd": "CLAUDE.md",
+    "docs": "docs",
+    "claudeAgents": ".claude/agents",
+    "claudeSkills": ".claude/skills",
+    "codexAgents": ".codex/agents",
+    "codexSkills": ".agents/skills",
+    "agentSourcesCodexOnly": ".kit/agents-src",
+    "config": ".kit/kit.config.json",
+    "check": ".kit/check.mjs",
+    "values": ".kit/values.json",
+    "backup": ".kit/backup",
+    "local": ".kit/local.json",
+    "gitignore": ".kit/.gitignore",
+    "kitCopy": ".kit/kit-src",
+    "kitCopyNote": "fallback only: a kit copy extracted inside the project when no folder outside it is writable; .kit/.gitignore lists kit-src/, check.mjs [8] warns until it is deleted (with the owner's approval)"
+  },
+  "docsRepoMode": {
+    "option": "--docs-repo <path-or-name>",
+    "note": "Multi-repo project: a code repo gets AGENTS.md, CLAUDE.md, agents, skills and .kit/ but no docs/; AGENTS.md ends with a <!-- docs-repo --> block pointing to the docs repo; .kit/kit.config.json records docsRepo; check.mjs prints the docs checks as PASS 'N/A by design (docs repo)'."
+  },
+  "modules": {
+    "core": {
+      "required": true,
+      "title": "Main agent + 7 professional agents, 9 process skills, docs templates, engineering operating model",
+      "agentsMd": "core/AGENTS.md",
+      "claudeMd": "core/CLAUDE.md",
+      "section": null,
+      "agents": "core/agents",
+      "skills": "core/skills",
+      "docs": "core/docs",
+      "expect": {
+        "agents": [
+          "agent-manager",
+          "product-manager",
+          "ux-designer",
+          "ui-designer",
+          "system-architect",
+          "backend",
+          "frontend",
+          "qa"
+        ],
+        "skills": [
+          "gate-check",
+          "mvp-fit-check",
+          "edge-state-ux-spec",
+          "microcopy-source-of-truth",
+          "spec-to-test-traceability",
+          "arch-decision-record",
+          "scalability-fit-review",
+          "external-skill-audit",
+          "privacy-data-check"
+        ],
+        "docs": [
+          "00_Index.md",
+          "project-status.md",
+          "decisions-log.md",
+          "open-questions.md",
+          "tasks.md",
+          "daily-summaries.md",
+          "mvp-scope.md",
+          "skills-index.md",
+          "engineering-operating-model.md",
+          "environments.md",
+          "adr/README.md",
+          "adr/ADR-TEMPLATE.md",
+          "architecture/README.md",
+          "runbooks/README.md",
+          "runbooks/local-setup.md",
+          "product/README.md",
+          "data/README.md"
+        ]
+      }
+    },
+    "web": {
+      "required": false,
+      "title": "Web product: web-builder agent, 6 design skills (upstream licenses kept), design-system and frontend/API guideline docs",
+      "section": "modules/web/AGENTS.section.md",
+      "sectionMaxBytes": 2500,
+      "agents": "modules/web/agents",
+      "skills": "modules/web/skills",
+      "docs": "modules/web/docs",
+      "licenseRequired": true,
+      "expect": {
+        "agents": ["web-builder"],
+        "skills": [
+          "design-craft",
+          "design-system",
+          "frontend-design",
+          "redesign-premium",
+          "taste-frontend",
+          "ui-ux-pro-max"
+        ],
+        "docs": ["design-system.md", "frontend-api-guidelines.md"]
+      }
+    },
+    "jira": {
+      "required": false,
+      "title": "Jira as the source of truth for execution, with automatic updates at the end of every completed part",
+      "section": "modules/jira/AGENTS.section.md",
+      "sectionMaxBytes": 2500,
+      "agents": null,
+      "skills": null,
+      "docs": "modules/jira/docs",
+      "placeholderGroup": "jira",
+      "expect": {
+        "docs": ["jira-workflow.md"]
+      }
+    },
+    "ai-product": {
+      "required": false,
+      "title": "Products built on LLM prompts: prompts and JSON contracts as versioned, reviewed engineering assets",
+      "section": "modules/ai-product/AGENTS.section.md",
+      "sectionMaxBytes": 2000,
+      "agents": null,
+      "skills": null,
+      "docs": "modules/ai-product/docs",
+      "expect": {
+        "docs": ["prompts-and-json-governance.md"]
+      }
+    }
+  },
+  "placeholders": {
+    "required": [
+      "PROJECT_NAME",
+      "PROJECT_ONE_LINER",
+      "ID_PREFIX",
+      "OWNER_NAME",
+      "INSTALL_DATE",
+      "KIT_VERSION",
+      "AUTONOMY_LEVEL",
+      "STAGE_CODE",
+      "STAGE_RULES",
+      "TEAM_SECTION",
+      "TASKS_SOURCE"
+    ],
+    "jira": [
+      "JIRA_SITE",
+      "JIRA_CLOUD_ID",
+      "JIRA_PROJECT_KEY",
+      "JIRA_EPIC_KEY",
+      "JIRA_LABEL",
+      "JIRA_TASK_TYPE",
+      "JIRA_STORY_TYPE"
+    ]
+  },
+  "placeholderRules": {
+    "PROJECT_NAME": { "pattern": "^[^|\\r\\n]+$", "note": "one line, no | — it is written into titles and table rows" },
+    "OWNER_NAME": { "pattern": "^[^|\\r\\n]+$", "note": "one line, no | — it is written into a decisions-log table row" },
+    "PROJECT_ONE_LINER": { "pattern": "^[^\\r\\n]+$", "note": "one line" },
+    "STAGE_CODE": { "pattern": "^[^|`\\r\\n]+$", "note": "one line, no | or backtick, e.g. SPEC-01" },
+    "STAGE_RULES": { "pattern": "^[^\\r\\n]+$", "note": "one line: what is allowed now" },
+    "ID_PREFIX": { "pattern": "^[A-Z]{2,5}$", "note": "2–5 upper-case letters" },
+    "INSTALL_DATE": { "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "note": "YYYY-MM-DD" },
+    "KIT_VERSION": { "pattern": "^\\d+\\.\\d+\\.\\d+$", "note": "x.y.z" },
+    "AUTONOMY_LEVEL": { "enum": ["strict", "balanced", "autonomous"] },
+    "TASKS_SOURCE": { "enum": ["Jira", "docs/tasks.md"] },
+    "JIRA_SITE": { "pattern": "^[^|`\\s]+$", "note": "one word, e.g. example.atlassian.net" },
+    "JIRA_CLOUD_ID": { "pattern": "^[^|`\\s]+$", "note": "one word" },
+    "JIRA_PROJECT_KEY": { "pattern": "^[^|`\\s]+$", "note": "one word" },
+    "JIRA_EPIC_KEY": { "pattern": "^[^|`\\s]+$", "note": "one word, or —" },
+    "JIRA_LABEL": { "pattern": "^[^|`\\s]+$", "note": "one word, or —" },
+    "JIRA_TASK_TYPE": { "pattern": "^[^|`\\r\\n]+$", "note": "one line, no | or backtick" },
+    "JIRA_STORY_TYPE": { "pattern": "^[^|`\\r\\n]+$", "note": "one line, no | or backtick" }
+  }
+}
